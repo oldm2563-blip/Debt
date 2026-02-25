@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('accommodation_id')->constrained()->cascadeOnDelete();
             $table->string('email');
             $table->string('token')->unique();
-            $table->enum('status', ['pending', 'accepted', 'declined'])->default('pending');
             $table->timestamp('expires_at')->nullable();
             $table->timestamps();
         });
