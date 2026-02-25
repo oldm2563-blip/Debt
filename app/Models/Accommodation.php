@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Accommodation extends Model
 {
-    protected $fillable = ['name', 'state'];
+    protected $fillable = ['name','token', 'state'];
 
     public function users()
     {
