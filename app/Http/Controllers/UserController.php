@@ -9,7 +9,7 @@ class UserController extends Controller
     public function index(){
         if(auth()->user()->accommodations()->exists()){
             $coloc = auth()->user()->accommodations()->first();
-            return redirect('/coloc/' . $coloc->id);
+            return redirect('/coloc/' . $coloc->token);
         }
         return view('newstart');
     }
