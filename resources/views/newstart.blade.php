@@ -40,6 +40,8 @@
 
                         blush: '#E8DDD4',
 
+                        admin: '#646970'
+
                     }
 
                 }
@@ -89,7 +91,13 @@
             <div class="flex items-center gap-4">
 
                 <!-- User badge -->
+                @if(auth()->user()->hasRole('admin'))
+                <div class="flex items-center gap-2 bg-admin px-3 py-1.5 rounded-full">
 
+                    <a class="text-ink/70 text-sm font-medium" href="/admin/dashboard">hello admin</a>
+
+                </div>
+                 @endif
                 <div class="flex items-center gap-2 bg-blush px-3 py-1.5 rounded-full">
 
                     <span class="text-ink/70 text-sm font-medium">{{ auth()->user()->reputation }}</span>
@@ -98,7 +106,7 @@
 
                 <div class="flex items-center gap-2 bg-blush px-3 py-1.5 rounded-full">
 
-                    <span class="text-ink/70 text-sm font-medium">{{ auth()->user()->balance }}DH</span>
+                    <span class="text-ink/70 text-sm font-medium">{{ number_format(auth()->user()->balance, 2) }}DH</span>
 
                 </div>
 
