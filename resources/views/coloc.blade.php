@@ -23,6 +23,7 @@
                         ink: '#1A1A2E',
                         sage: '#4A7C6F',
                         blush: '#E8DDD4',
+                        admin: '#646970'
                     }
                 }
             }
@@ -50,8 +51,22 @@
             <!-- Right side -->
             
             <div class="flex items-center gap-4">
+                @can('view', $coloc)
+                    <div class="flex items-center gap-2 bg-admin px-3 py-1.5 rounded-full">
 
-                 <div class="flex items-center gap-2 bg-blush px-3 py-1.5 rounded-full">
+                        <a class="text-ink/70 text-sm font-medium" href="/admin/dashboard">hello admin</a>
+
+                    </div>
+                @endcan
+                @can('update', $coloc)
+                    <div class="flex items-center gap-2 bg-sage px-3 py-1.5 rounded-full">
+                        <form action="/cancel/{{ $coloc->id }}" method="POST">
+                            @csrf
+                            <button class="text-ink/70 text-sm font-medium">Cancel</button>
+                        </form>
+                    </div>
+                @endcan
+                <div class="flex items-center gap-2 bg-blush px-3 py-1.5 rounded-full">
 
                     <span class="text-ink/70 text-sm font-medium">{{ auth()->user()->reputation }}</span>
 
@@ -148,12 +163,13 @@
                             @endif
                         </li>
                     @endforeach
-
+                    
                     <div class="pt-3">
-                        <a href="#" id="inviteToggle" class="block w-full text-center text-sm font-medium text-sage bg-sage/10 px-4 py-2 rounded-xl border border-blush">
+                        <a href="#" id="inviteToggle" class="block @cannot('update', $coloc) hidden @endcannot w-full text-center text-sm font-medium text-sage bg-sage/10 px-4 py-2 rounded-xl border border-blush">
                             Invite a new member
                         </a>
                     </div>
+                    
 
                     <div id="inviteForm" class="hidden pt-3">
                         <form action="/invite/{{ $coloc->id }}" method="POST">
@@ -162,11 +178,11 @@
                             <button type="submit" class="mt-3 w-full bg-sage text-white text-sm font-medium px-4 py-2 rounded-xl">Invite</button>
                         </form>
                     </div>
+
                 </ul>
 
             </div>
 
-            <!-- Expenses + Categories -->
             <div class="lg:col-span-2 flex flex-col gap-6">
 
                 <!-- Expenses card -->
@@ -225,7 +241,7 @@
                     @empty
                         <p class="text-sm text-ink/40 text-center py-6">No expenses yet.</p>
                     @endforelse
-
+                    <p class="text-sm font-medium text-ink">Total Is :{{ number_format($total, 2) }}</p>
                 </div>
 
                 <!-- Categories card -->
