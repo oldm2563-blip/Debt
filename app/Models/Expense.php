@@ -24,4 +24,7 @@ class Expense extends Model
     {
         return $this->belongsTo(Category::class);
     }
+    public function shares(){
+        return $this->belongsToMany(User::class, 'expense_share')->withPivot('amount');
+    }
 }
