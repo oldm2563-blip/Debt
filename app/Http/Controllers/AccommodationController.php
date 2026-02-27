@@ -37,15 +37,20 @@ class AccommodationController extends Controller
     public function coloc($token)
     {
         if (auth()->user()->accommodations()->exists()) {
-            $coloc = Accommodation::where('token', $token)->first();
+            $user = auth()->user();
+            $coloc = Accommodation::where('token', $token)->firstOrFail();
             $users = $coloc->users;
             $expenses = $coloc->expenses;
             $payments = $coloc->payments;
             $categories = $coloc->categories;
-            return view('coloc', ['users' => $users, 'coloc' => $coloc, 'expenses' => $expenses, 'payments' => $payments, 'categories' => $categories]);
-        }
+            $total = $coloc->expenses->sum('amount');
+            if(!$user->accommodations()->where('accommodation_id', $coloc->id)->exists() || $coloc->state === 'canceled'){
+                 return redirect('/dashboard');
+                }
+            return view('coloc', ['users' => $users, 'coloc' => $coloc, 'expenses' => $expenses, 'payments' => $payments, 'categories' => $categories, 'total' => $total]);
+            }
         else{
-            abort(403);
+            return redirect('/dashboard');
         }
     }
     public function invite(Request $request, Accommodation $coloc)
@@ -77,7 +82,12 @@ class AccommodationController extends Controller
         return back();
     }
 
-
+    public function cancel(Accommodation $coloc){
+        $coloc->state = 'canceled';
+        $coloc->users()->detach();
+        $coloc->save();
+        return redirect('/dashboard');
+    }
 
     public function quit(User $user, Accommodation $coloc)
     {
@@ -136,4 +146,6 @@ class AccommodationController extends Controller
         $user->save();
         return back();
     }
+
+
 }
