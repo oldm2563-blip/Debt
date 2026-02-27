@@ -67,4 +67,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Payment::class, 'receiver_id');
     }
+    public function sharrer(){
+        return $this->belongsToMany(Expense::class, 'expense_share')->withPivot('amount');
+    }
 }
