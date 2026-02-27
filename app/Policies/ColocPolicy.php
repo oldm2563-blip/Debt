@@ -21,7 +21,7 @@ class ColocPolicy
      */
     public function view(User $user, Accommodation $accommodation): bool
     {
-        return false;
+        return $user->hasRole('admin');;
     }
 
     /**
@@ -41,7 +41,6 @@ class ColocPolicy
         ->where('users.id', $user->id)
         ->wherePivot('role', 'owner')
         ->exists();
-        //return $relate && $relate->pivot->role === 'owner';
     }
 
     /**
