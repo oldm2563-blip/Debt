@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AccommodationController;
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\InviteController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +23,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/invite/{coloc}', [AccommodationController::class, 'invite']);
     Route::get('/request/{token}', [InviteController::class, 'form']);
     Route::get('/accept/{token}', [InviteController::class, 'accept']);
+    Route::post('/categories/{coloc}', [AccommodationController::class, 'create_category']);
+    Route::post('/quit/{user}/{coloc}', [AccommodationController::class, 'quit']);
+    Route::post('/kick/{user}/{coloc}', [AccommodationController::class, 'kick']);
+    Route::post('/expenses/{coloc}', [ExpenseController::class, 'create_expense']);
+    Route::post('/pay/{id}/{exs_id}', [PaymentController::class, 'pay']);
 });
 
 require __DIR__.'/auth.php';
