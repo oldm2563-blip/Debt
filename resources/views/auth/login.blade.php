@@ -44,4 +44,7 @@
             </x-primary-button>
         </div>
     </form>
+    @if ($errors->any())
+        <p>{{ $errors->first() }}</p>
+    @endif
 </x-guest-layout>
