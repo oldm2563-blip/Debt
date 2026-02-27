@@ -92,6 +92,18 @@
 
                 <div class="flex items-center gap-2 bg-blush px-3 py-1.5 rounded-full">
 
+                    <span class="text-ink/70 text-sm font-medium">{{ auth()->user()->reputation }}</span>
+
+                </div>
+
+                <div class="flex items-center gap-2 bg-blush px-3 py-1.5 rounded-full">
+
+                    <span class="text-ink/70 text-sm font-medium">{{ auth()->user()->balance }}DH</span>
+
+                </div>
+
+                <div class="flex items-center gap-2 bg-blush px-3 py-1.5 rounded-full">
+
                     <div class="w-5 h-5 rounded-full bg-sage/30 flex items-center justify-center">
 
                         <span class="text-sage text-xs font-medium">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
